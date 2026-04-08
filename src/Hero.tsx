@@ -3,7 +3,7 @@ import { useLanguage } from "./LanguageContext";
 import { getContent } from "./content";
 import { ChevronDown } from "lucide-react";
 import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
-import heroImage from './assets/hero-custom.png'; // imported hero image
+import heroImage from './assets/hero-custom.png';
 
 export default function Hero() {
   const { language } = useLanguage();
@@ -32,8 +32,8 @@ export default function Hero() {
     mouseY.set(e.clientY - rect.top);
   };
 
-  const handleCTA = () => {
-    document.getElementById("products")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const handleCTA = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -61,7 +61,7 @@ export default function Hero() {
         style={{ backgroundImage: gradient }}
       />
 
-      {/* Hero text */}
+      {/* Hero content */}
       <div className="relative z-10 mx-auto w-full max-w-4xl px-4 text-center sm:px-6 lg:px-8">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
@@ -83,16 +83,26 @@ export default function Hero() {
           {content.hero.subtitle}
         </motion.p>
 
-        <div className="mt-10 flex justify-center">
+        {/* CTA buttons */}
+        <div className="mt-10 flex justify-center gap-4 flex-wrap">
           <motion.button
             type="button"
-            onClick={handleCTA}
+            onClick={() => handleCTA("products")}
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.98 }}
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white px-8 py-3.5 font-semibold text-slate-950 shadow-[0_18px_60px_rgba(255,255,255,0.18)] transition-shadow duration-300 hover:shadow-[0_22px_80px_rgba(255,255,255,0.26)]"
           >
             <span className="relative z-10">{content.hero.cta}</span>
-            <span className="absolute inset-0 bg-gradient-to-r from-white via-white to-amber-100 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          </motion.button>
+
+          <motion.button
+            type="button"
+            onClick={() => handleCTA("contact")}
+            whileHover={{ scale: 1.04, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/15 bg-amber-500/20 px-8 py-3.5 font-semibold text-white shadow-[0_18px_60px_rgba(255,255,255,0.18)] transition-shadow duration-300 hover:shadow-[0_22px_80px_rgba(255,255,255,0.26)]"
+          >
+            <span className="relative z-10">{language === "ar" ? "تواصل معنا" : "Contact"}</span>
           </motion.button>
         </div>
 
@@ -100,7 +110,7 @@ export default function Hero() {
         <motion.button
           type="button"
           aria-label="Scroll to products"
-          onClick={handleCTA}
+          onClick={() => handleCTA("products")}
           className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 rounded-full border border-white/15 bg-white/10 px-4 py-3 text-white/90 backdrop-blur-md shadow-lg"
           animate={mounted ? { y: [0, 8, 0] } : {}}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
