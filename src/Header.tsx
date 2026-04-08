@@ -1,3 +1,4 @@
+import logo from '../assets/logo.png'; 
 import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from './LanguageContext';
 import { getContent } from './content';
@@ -45,7 +46,7 @@ export default function Header() {
         {/* Logo */}
         <div className="flex items-center gap-3">
           <img 
-            src="/logo.png" 
+            src={logo}  
             alt="Naeem Factory Logo" 
             className="h-12 w-auto"
           />
