@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLanguage } from './LanguageContext';
-import { getContent } from './content';
-import { Globe, Menu, X } from 'lucide-react';
-import logo from './assets/logo.png'; // logo from src/assets
+import { useLanguage } from "./LanguageContext";
+import { getContent } from "./content";
+import { Globe, Menu, X } from "lucide-react";
+import logo from "./assets/logo.png"; // Make sure logo.png is in src/assets
 
 export default function Header() {
   const { language, toggleLanguage } = useLanguage();
@@ -15,29 +15,35 @@ export default function Header() {
     { href: "#about", label: content.nav.about },
     { href: "#services", label: content.nav.services },
     { href: "#products", label: content.nav.products },
-    { href: "#contact", label: content.nav.contact }, // ensure scroll works
+    { href: "#contact", label: content.nav.contact }, // ensures scroll works
   ];
-  const displayedLinks = language === 'ar' ? [...links].reverse() : links;
+  const displayedLinks = language === "ar" ? [...links].reverse() : links;
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
         setMobileOpen(false);
       }
     };
     if (mobileOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [mobileOpen]);
 
-  // Smooth scroll
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  // Smooth scroll helper
+  const handleLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string
+  ) => {
     e.preventDefault();
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setMobileOpen(false);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMobileOpen(false); // close mobile menu
   };
 
   return (
@@ -48,17 +54,21 @@ export default function Header() {
           <img src={logo} alt="Naeem Factory Logo" className="h-12 w-auto" />
           <div className="hidden sm:block">
             <h1 className="text-lg font-bold text-foreground">
-              {language === 'ar' ? 'مصنع نعيم' : 'Naeem Factory'}
+              {language === "ar" ? "مصنع نعيم" : "Naeem Factory"}
             </h1>
             <p className="text-xs text-muted-foreground">
-              {language === 'ar' ? 'رخام وجرانيت' : 'Marble & Granite'}
+              {language === "ar" ? "رخام وجرانيت" : "Marble & Granite"}
             </p>
           </div>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className={`hidden md:flex items-center gap-8 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-          {displayedLinks.map(link => (
+        <nav
+          className={`hidden md:flex items-center gap-8 ${
+            language === "ar" ? "flex-row-reverse" : ""
+          }`}
+        >
+          {displayedLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -77,7 +87,7 @@ export default function Header() {
           aria-label="Toggle language"
         >
           <Globe size={16} className="text-accent" />
-          <span className="text-sm font-medium">{language === 'en' ? 'AR' : 'EN'}</span>
+          <span className="text-sm font-medium">{language === "en" ? "AR" : "EN"}</span>
         </button>
 
         {/* Mobile Hamburger + Language */}
@@ -96,7 +106,7 @@ export default function Header() {
             aria-label="Toggle language"
           >
             <Globe size={16} className="text-accent" />
-            <span className="text-sm font-medium">{language === 'en' ? 'AR' : 'EN'}</span>
+            <span className="text-sm font-medium">{language === "en" ? "AR" : "EN"}</span>
           </button>
         </div>
       </div>
@@ -107,7 +117,7 @@ export default function Header() {
           ref={mobileMenuRef}
           className="md:hidden absolute top-full inset-x-0 bg-white/95 backdrop-blur-sm border-t border-border shadow-md z-40 flex flex-col items-center py-4 gap-4"
         >
-          {displayedLinks.map(link => (
+          {displayedLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
