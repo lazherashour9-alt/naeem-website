@@ -8,15 +8,14 @@ export default function Footer() {
   const { language } = useLanguage();
   const content = getContent(language);
 
-  // Format phone
+  // Phone formatting
   const rawPhone = content.footer.phone.replace(/\s+/g, "");
-  const phoneNumber = rawPhone.startsWith("+218") ? rawPhone : `+218${rawPhone.replace(/^0/, "")}`;
+  const phoneNumber = rawPhone.startsWith("+218")
+    ? rawPhone
+    : `+218${rawPhone.replace(/^0/, "")}`;
   const whatsappLink = `https://wa.me/${phoneNumber.replace("+", "")}`;
-
-  // Google Maps link
   const mapsLink = "https://maps.google.com/?q=32.33125770663211,15.14155602383492";
 
-  // Scroll-based animations
   const { scrollYProgress } = useScroll();
   const bgY = useTransform(scrollYProgress, [0.7, 1], [0, -90]);
   const bgScale = useTransform(scrollYProgress, [0.7, 1], [1, 1.06]);
@@ -27,12 +26,7 @@ export default function Footer() {
 
   const itemVariants = useMemo(() => ({
     hidden: { opacity: 0, y: 24, filter: "blur(8px)" },
-    show: (delay = 0) => ({
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] },
-    }),
+    show: (delay = 0) => ({ opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] } }),
   }), []);
 
   return (
@@ -48,7 +42,6 @@ export default function Footer() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 md:py-24">
         <div className="grid gap-12 md:grid-cols-2">
-
           {/* LEFT SIDE */}
           <div className="space-y-10">
             {/* Address */}
@@ -91,14 +84,12 @@ export default function Footer() {
               </motion.div>
               <div>
                 <h3 className="text-lg font-semibold">{language === "ar" ? "البريد الإلكتروني" : "Email"}</h3>
-                <a href={`mailto:${content.footer.email}`} className="text-sm text-white/80 hover:text-cyan-300">
-                  {content.footer.email}
-                </a>
+                <a href={`mailto:${content.footer.email}`} className="text-sm text-white/80 hover:text-cyan-300">{content.footer.email}</a>
               </div>
             </motion.div>
           </div>
 
-          {/* RIGHT SIDE - MAP */}
+          {/* RIGHT SIDE - Google Map */}
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} className="rounded-xl overflow-hidden border border-white/10 shadow-lg">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4051.678618653977!2d15.14155602383492!3d32.33125770663211!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13a151d0bfb26f2b%3A0x361c70ae79cdcbec!2z2YXYtdmG2Lkg2YbYudmK2YUg2YTZhNix2K7Yp9mFINmIINin2YTYrNix2KfZhtmK2KogMg!5e1!3m2!1sar!2sly!4v1775469169487!5m2!1sar!2sly"
