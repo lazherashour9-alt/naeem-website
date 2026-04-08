@@ -1,7 +1,8 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/naeem-website/',
   plugins: [react()],
+  base: '/naeem-website/', // Important for GitHub Pages subfolder
 });
